@@ -1,0 +1,30 @@
+
+# Archivos compilados
+*.class
+
+# Carpetas de compilación
+bin/
+out/
+target/
+build/
+
+# Empaquetados
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+nbproject/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
