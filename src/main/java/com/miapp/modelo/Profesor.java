@@ -8,6 +8,20 @@ package com.miapp.modelo;
  *
  * @author abrah
  */
-public class Profesor {
+public class Profesor extends Persona{
     
+    private final Double salarioBase;
+
+    public Profesor(Double salarioBase, String nombre, Integer id, String apellido) {
+        super(nombre, id, apellido);
+        this.salarioBase = salarioBase;
+    }
+
+    
+
+    
+    
+    public void impartirClase(){
+        
+    }
 }
