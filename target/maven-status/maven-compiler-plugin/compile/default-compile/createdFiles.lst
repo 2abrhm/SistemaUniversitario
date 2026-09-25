@@ -1,6 +1,15 @@
-com\miapp\servicios\IBuscador.class
-com\miapp\vista\EstudianteView.class
+com\miapp\utilidades\EstadoMatricula.class
 com\miapp\controlador\EstudianteController.class
 com\miapp\SistemaUniversitario.class
+com\miapp\vista\AgregarEstudianteDialog.class
+com\miapp\vista\CambiarEstadoDialog.class
+com\miapp\modelo\Curso.class
+com\miapp\modelo\Persona.class
+com\miapp\servicios\Inscribible.class
+com\miapp\vista\GestionarProfesoresDialog.class
+com\miapp\servicios\IBuscador.class
+com\miapp\modelo\Profesor.class
+com\miapp\vista\EstudianteView.class
 com\miapp\modelo\Estudiante.class
+com\miapp\vista\InscribirCursoDialog.class
 com\miapp\vista\EstudianteView$1.class

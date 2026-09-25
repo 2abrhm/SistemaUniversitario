@@ -3,10 +3,10 @@ package com.miapp.controlador;
 import com.miapp.modelo.Estudiante;
 import com.miapp.servicios.IBuscador;
 import com.miapp.vista.EstudianteView;
+import com.miapp.utilidades.EstadoMatricula;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class EstudianteController implements IBuscador {
 
@@ -14,7 +14,6 @@ public class EstudianteController implements IBuscador {
     private static final int CANTIDAD_ESTUDIANTES_INICIALES = 12;
     private static final String MENSAJE_BUSQUEDA_VACIA = "Por favor ingrese un nombre para buscar.";
     private static final String MENSAJE_BUSQUEDA_CARRERA_VACIA = "Por favor seleccione una carrera para buscar.";
-    private static final String MENSAJE_SIN_RESULTADOS = "No se encontraron estudiantes con ese criterio.";
 
     // ── Vista ─────────────────────────────────────────────────────────────────
     private EstudianteView vista;
@@ -23,17 +22,13 @@ public class EstudianteController implements IBuscador {
     private Estudiante[] estudiantes;
 
     // ── Constructor ───────────────────────────────────────────────────────────
-
     public EstudianteController(EstudianteView vista) {
         this.vista = vista;
-        // Primero cargar datos (inicializar estudiantes[])
         cargarDatos();
-        // Luego asignar controlador a la vista (ahora es seguro acceder a estudiantes[])
         this.vista.setControlador(this);
     }
 
     // ── Implementación de la interfaz IBuscador ───────────────────────────────
-
     @Override
     public void cargarDatos() {
         inicializarEstudiantes();
@@ -49,37 +44,44 @@ public class EstudianteController implements IBuscador {
         buscarPorCarrera(carrera);
     }
 
-    // ── Carga de datos iniciales ──────────────────────────────────────────────
+    @Override
+    public void buscarEstudiantesPorCurso(String codigoCurso) {
+        buscarEstudiantesPorCursoLogica(codigoCurso);
+    }
 
+    @Override
+    public void buscarEstudiantePorEstado(String estadoMatricula) {
+        try {
+            EstadoMatricula estado = EstadoMatricula.valueOf(estadoMatricula);
+            buscarEstudiantesPorEstado(estado);
+        } catch (Exception e) {
+            vista.mostrarError("Estado no válido.");
+        }
+    }
+
+    // ── Carga de datos iniciales ──────────────────────────────────────────────
     private void inicializarEstudiantes() {
         estudiantes = new Estudiante[CANTIDAD_ESTUDIANTES_INICIALES];
-
-        // Reinicia el contador estático de Estudiante antes de cargar nuevos datos
         Estudiante.reiniciarContador();
 
-        estudiantes[0]  = new Estudiante(1,  "Ana ","García",        "Ingeniería de Sistemas",  4.5);
-        estudiantes[1]  = new Estudiante(2,  "Carlos"," López",      "Ingeniería Civil",        3.8);
-        estudiantes[2]  = new Estudiante(3,  "María", "Rodríguez",   "Medicina",                4.9);
-        estudiantes[3]  = new Estudiante(4,  "José ","Martínez",     "Derecho",                 3.5);
-        estudiantes[4]  = new Estudiante(5,  "Laura ","Sánchez",     "Administración",          4.1);
-        estudiantes[5]  = new Estudiante(6,  "Andrés ","Torres",     "Ingeniería de Sistemas",  3.9);
-        estudiantes[6]  = new Estudiante(7,  "Valentina ","Gómez",   "Psicología",              4.3);
-        estudiantes[7]  = new Estudiante(8,  "Luis ","Herrera",      "Economía",                3.7);
-        estudiantes[8]  = new Estudiante(9,  "Sofía ","Díaz",        "Ingeniería Civil",        4.6);
-        estudiantes[9]  = new Estudiante(10, "Juliana ","Morales",   "Medicina",                4.8);
-        estudiantes[10] = new Estudiante(11, "Ana Milena ","Ruiz",   "Derecho",                 4.0);
-        estudiantes[11] = new Estudiante(12, "Carlos Andrés ","Paz", "Administración",          3.6);
+        estudiantes[0]  = new Estudiante("Ana ", 1, "García", "Ingeniería de Sistemas", 4.5);
+        estudiantes[1]  = new Estudiante("Carlos", 2, " López", "Ingeniería Civil", 3.8);
+        estudiantes[2]  = new Estudiante("María", 3, "Rodríguez", "Medicina", 4.9);
+        estudiantes[3]  = new Estudiante("José ", 4, "Martínez", "Derecho", 3.5);
+        estudiantes[4]  = new Estudiante("Laura ", 5, "Sánchez", "Administración", 4.1);
+        estudiantes[5]  = new Estudiante("Andrés ", 6, "Torres", "Ingeniería de Sistemas", 3.9);
+        estudiantes[6]  = new Estudiante("Valentina ", 7, "Gómez", "Psicología", 4.3);
+        estudiantes[7]  = new Estudiante("Luis ", 8, "Herrera", "Economía", 3.7);
+        estudiantes[8]  = new Estudiante("Sofía ", 9, "Díaz", "Ingeniería Civil", 4.6);
+        estudiantes[9]  = new Estudiante("Juliana ", 10, "Morales", "Medicina", 4.8);
+        estudiantes[10] = new Estudiante("Ana Milena ", 11, "Ruiz", "Derecho", 4.0);
+        estudiantes[11] = new Estudiante("Carlos Andrés ", 12, "Paz", "Administración", 3.6);
 
-        // Log: informa cuántos estudiantes se cargaron usando static getTotalEstudiantes()
         System.out.println("Total de estudiantes cargados: " + Estudiante.getTotalEstudiantes());
     }
 
     // ── Lógica de búsqueda ────────────────────────────────────────────────────
-
-  
     private void buscarPorCriterio(String criterio) {
-
-        // Validación básica usando constante final
         if (criterio == null || criterio.isEmpty()) {
             vista.mostrarError(MENSAJE_BUSQUEDA_VACIA);
             return;
@@ -89,7 +91,6 @@ public class EstudianteController implements IBuscador {
         String criterioBajo = criterio.toLowerCase();
 
         for (Estudiante e : estudiantes) {
-            // Validar que el elemento no sea null
             if (e != null && (e.getNombre().toLowerCase().contains(criterioBajo) ||
                 e.getApellido().toLowerCase().contains(criterioBajo))) {
                 resultados.add(e);
@@ -97,61 +98,75 @@ public class EstudianteController implements IBuscador {
         }
 
         if (resultados.isEmpty()) {
-            vista.mostrarEstudiantes(new ArrayList<>()); // mostrará mensaje vacío
+            vista.mostrarEstudiantes(new ArrayList<>()); 
         } else if (resultados.size() == 1) {
-            // Un solo resultado: usar vista.mostrarEstudiante(fila)
             vista.mostrarEstudiante(convertirAFila(resultados.get(0)));
         } else {
-            // Varios resultados: mostrar lista completa ya convertida a filas
             vista.mostrarEstudiantes(convertirAFilas(resultados));
         }
     }
 
-   
     private void buscarPorCarrera(String carrera) {
-        // Validación básica usando constante final
         if (carrera == null || carrera.isEmpty() || carrera.equals("Seleccionar...")) {
             vista.mostrarError(MENSAJE_BUSQUEDA_CARRERA_VACIA);
             return;
         }
 
         List<Estudiante> resultados = new ArrayList<>();
-
-        // Búsqueda exacta por carrera
         for (Estudiante e : estudiantes) {
-            // Validar que el elemento no sea null
             if (e != null && e.getCarrera().equalsIgnoreCase(carrera)) {
                 resultados.add(e);
             }
         }
 
-        // Mostrar resultados (ya convertidos a filas, no como Estudiante)
         vista.mostrarEstudiantes(convertirAFilas(resultados));
     }
 
-    
+    public void buscarEstudiantesPorEstado(EstadoMatricula estado) {
+        List<Estudiante> resultados = new ArrayList<>();
+        for (Estudiante e : estudiantes) {
+            if (e != null && e.getEstado() == estado) {
+                resultados.add(e);
+            }
+        }
+        vista.mostrarEstudiantes(convertirAFilas(resultados));
+    }
+
+    public void buscarEstudiantesPorCursoLogica(String curso) {
+        List<Estudiante> resultados = new ArrayList<>();
+        for (Estudiante e : estudiantes) {
+            if (e != null) {
+                resultados.add(e);
+            }
+        }
+        vista.mostrarEstudiantes(convertirAFilas(resultados));
+    }
+
+    // ── Métodos Auxiliares ────────────────────────────────────────────────────
     private Object[] convertirAFila(Estudiante e) {
         return new Object[]{
             e.getId(),
             e.getNombre(),
             e.getApellido(),
             e.getCarrera(),
-            String.format("%.2f", e.getPromedio())
+            String.format("%.2f", e.getPromedio()),
+            e.getEstado()
         };
     }
 
-  
     private List<Object[]> convertirAFilas(List<Estudiante> lista) {
         List<Object[]> filas = new ArrayList<>();
         for (Estudiante e : lista) {
-            filas.add(convertirAFila(e));
+            if (e != null) {
+                filas.add(convertirAFila(e));
+            }
         }
         return filas;
     }
 
     public Estudiante obtenerEstudiantePorId(int id) {
         for (Estudiante e : estudiantes) {
-            if (e.getId() == id) {
+            if (e != null && e.getId() == id) {
                 return e;
             }
         }
@@ -161,7 +176,6 @@ public class EstudianteController implements IBuscador {
     public String[] obtenerCarrerasUnicas() {
         List<String> carreras = new ArrayList<>();
         for (Estudiante e : estudiantes) {
-            // Validar que el elemento no sea null
             if (e != null) {
                 String carrera = e.getCarrera();
                 if (!carreras.contains(carrera)) {
@@ -172,42 +186,42 @@ public class EstudianteController implements IBuscador {
         return carreras.toArray(new String[0]);
     }
 
- 
     public final int obtenerTotalEstudiantes() {
         return Estudiante.getTotalEstudiantes();
     }
 
-   
     public boolean agregarEstudiante(String nombre, String apellido, String carrera, double promedio) {
-        // Validación de datos
         if (nombre == null || nombre.isEmpty() || apellido == null || apellido.isEmpty() ||
             carrera == null || carrera.isEmpty()) {
             vista.mostrarError("Todos los campos son obligatorios.");
             return false;
         }
 
-        // Expandir el array si es necesario antes de agregar
         if (estudiantes.length == Estudiante.getTotalEstudiantes()) {
-            // El array está lleno, crear uno más grande
             Estudiante[] nuevoArray = new Estudiante[estudiantes.length + 5];
             System.arraycopy(estudiantes, 0, nuevoArray, 0, estudiantes.length);
             estudiantes = nuevoArray;
         }
 
-        // Obtener el índice donde se guardará el nuevo estudiante
         int indiceNuevoEstudiante = Estudiante.getTotalEstudiantes();
-
-        // Crear nuevo estudiante con ID automático basado en el contador static
         int proximoId = Estudiante.getProximoId();
-        Estudiante nuevoEstudiante = new Estudiante(proximoId, nombre, apellido, carrera, promedio);
-
-        // Agregar el nuevo estudiante en la posición correcta
+        
+        Estudiante nuevoEstudiante = new Estudiante(nombre, proximoId, apellido, carrera, promedio);
         estudiantes[indiceNuevoEstudiante] = nuevoEstudiante;
 
-        // Mostrar mensaje de éxito
         vista.mostrarMensaje("Estudiante agregado correctamente.\nTotal de estudiantes: " +
                             Estudiante.getTotalEstudiantes());
 
         return true;
     }
+    
+    public void inscribirEstudianteEnCurso(int id, String curso) {
+    Estudiante e = obtenerEstudiantePorId(id);
+    if (e != null) {
+        vista.mostrarMensaje("Estudiante " + e.getNombre() + " " + e.getApellido() + " inscrito exitosamente en el curso: " + curso);
+    } else {
+        vista.mostrarError("No se encontró el estudiante seleccionado.");
+    }
+}
+    
 }

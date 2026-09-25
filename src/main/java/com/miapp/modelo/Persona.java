@@ -11,10 +11,10 @@ package com.miapp.modelo;
 public abstract class Persona {
     
     private String nombre;
-    private Integer id;
+    protected int id;
     private String apellido;
 
-    public Persona(String nombre, Integer id, String apellido) {
+    public Persona(String nombre, int id, String apellido) {
         this.nombre = nombre;
         this.id = id;
         this.apellido = apellido;
@@ -28,11 +28,11 @@ public abstract class Persona {
         this.nombre = nombre;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,8 +47,7 @@ public abstract class Persona {
     
    
     
-    public void calcularPago(){
-        
-    }
+    public abstract double calcularPago();
+       
     
 }

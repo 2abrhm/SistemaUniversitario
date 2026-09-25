@@ -1,5 +1,14 @@
 C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\controlador\EstudianteController.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\modelo\Curso.java
 C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\modelo\Estudiante.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\modelo\Persona.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\modelo\Profesor.java
 C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\servicios\IBuscador.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\servicios\Inscribible.java
 C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\SistemaUniversitario.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\utilidades\EstadoMatricula.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\vista\AgregarEstudianteDialog.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\vista\CambiarEstadoDialog.java
 C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\vista\EstudianteView.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\vista\GestionarProfesoresDialog.java
+C:\Users\abrah\Downloads\Poo\git\EstudianteMVc\SistemaUniversitario\src\main\java\com\miapp\vista\InscribirCursoDialog.java
