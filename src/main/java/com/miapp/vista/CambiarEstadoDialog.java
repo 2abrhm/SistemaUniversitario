@@ -59,13 +59,15 @@ public class CambiarEstadoDialog extends JDialog {
         add(panelForm, BorderLayout.CENTER);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnActualizar.addActionListener(e -> {
-            EstadoMatricula nuevoEstado = (EstadoMatricula) cmbEstados.getSelectedItem();
-            JOptionPane.showMessageDialog(this, "Estado del estudiante actualizado a " + nuevoEstado, "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            if (alActualizar != null) {
-                alActualizar.run();
-            }
-            dispose();
-        });
+     btnActualizar.addActionListener(e -> {
+    EstadoMatricula nuevoEstado = (EstadoMatricula) cmbEstados.getSelectedItem();
+    if (controlador != null) {
+        controlador.cambiarEstadoEstudiante(idEstudiante, nuevoEstado);
+    }
+    if (alActualizar != null) {
+        alActualizar.run(); // Refresca la tabla en la vista principal
+    }
+    dispose();
+});
     }
 }

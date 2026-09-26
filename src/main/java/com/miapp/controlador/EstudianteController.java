@@ -19,6 +19,7 @@ public class EstudianteController implements IBuscador {
     private EstudianteView vista;
 
     // ── Array de estudiantes (fuente de datos) ────────────────────────────────
+    
     private Estudiante[] estudiantes;
 
     // ── Constructor ───────────────────────────────────────────────────────────
@@ -133,13 +134,20 @@ public class EstudianteController implements IBuscador {
     }
 
     public void buscarEstudiantesPorCursoLogica(String curso) {
-        List<Estudiante> resultados = new ArrayList<>();
-        for (Estudiante e : estudiantes) {
-            if (e != null) {
-                resultados.add(e);
-            }
+     List<Estudiante> resultados = new ArrayList<>();
+
+    for (Estudiante e : estudiantes) {
+        if (e != null && e.estaInscritoEn(curso)) {
+            resultados.add(e);
         }
-        vista.mostrarEstudiantes(convertirAFilas(resultados));
+    }
+
+    if (resultados.isEmpty()) {
+        vista.mostrarError("No se encontraron estudiantes matriculados en: " + curso);
+    }
+
+ 
+    vista.mostrarEstudiantes(convertirAFilas(resultados));
     }
 
     // ── Métodos Auxiliares ────────────────────────────────────────────────────
@@ -223,5 +231,17 @@ public class EstudianteController implements IBuscador {
         vista.mostrarError("No se encontró el estudiante seleccionado.");
     }
 }
+    
+    
+    public void cambiarEstadoEstudiante(int id, EstadoMatricula nuevoEstado) {
+    Estudiante e = obtenerEstudiantePorId(id);
+    if (e != null) {
+        e.setEstado(nuevoEstado);
+        vista.mostrarMensaje("El estado de " + e.getNombre() + " " + e.getApellido() + " se actualizó a: " + nuevoEstado);
+    } else {
+        vista.mostrarError("No se encontró el estudiante.");
+    }
+}
+    
     
 }

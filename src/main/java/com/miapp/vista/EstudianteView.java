@@ -16,6 +16,8 @@ public class EstudianteView extends JFrame {
 
     private static final String[] COLUMNAS_TABLA = {"ID", "Nombre", "Apellido", "Carrera", "Promedio", "Estado"};
 
+
+    
     // Búsquedas y Filtros
     private JTextField txtBuscarNombre;
     private JComboBox<String> cmbCarrera;
